@@ -1,1 +1,6 @@
-<p>checkbox works!</p>
+@if(label()) {
+    <label [class]="labelClass">{{ label() }}
+    <input type="checkbox" [class]="inputClass" [checked]="value()" (change)="onInput($event)" />
+    </label>
+}
+    

@@ -1,0 +1,40 @@
+<div [ngClass]="{'mx-6': fullpage, 'md:mx-0 mx-5': !fullpage}" class="flex justify-between gap-3 mt-4">
+    <input 
+    type="search"
+    class="outline-blue-300 w-full rounded-sm px-2 py-1 border-solid border-2 border-gray-500 bg-white"
+    [(ngModel)]="searchTerm" />
+    <select class="border-2 border-neutral-700 rounded-lg" [(ngModel)]="taskStatusFilter">
+        <option defa value="all">All</option>
+        <option value="done" selected>Done</option>
+        <option value="pending">Pending</option>
+    </select>
+</div>
+
+<div [ngClass]="{'md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:mx-0 mx-6': !fullpage, 'lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 grid-cols-1': fullpage, 'mx-6': fullpage}" class="grid gap-3 mt-4">
+
+    @for (task of filteredTasks(); track task.id) {
+
+        <div (click)="viewTask(task.id)" class="rounded-sm flex flex-col bg-neutral-100 p-4 shadow-sm hover:bg-white cursor-pointer">
+            <div class="flex justify-between">
+                <h3>{{ (task.name.length>15)? (task.name | slice:0:15)+'...':(task.name) }}</h3>
+                <span (click)="deleteTask($event, task.id)" class="text-red-400 hover:text-red-500" href="#">
+                    <svg class="hover:fill-red-500 w-[.75rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                </span>
+            </div>
+
+            <p class="overflow-hidden text-ellipsis">{{ (task.content.length>25)? (task.content | slice:0:25)+'...':(task.content)  }}</p>
+
+            <small class="font-bold p-2 w-min rounded-full cursor-pointer" [ngClass]="{
+                'bg-neutral-300 hover:bg-neutral-200': !task.done,
+                'bg-blue-400 hover:bg-blue-300': task.done
+            }"
+            (click)="toggleTaskState($event, task.id)"
+            >{{ task.done ? "Done" : "Pending" }}</small>
+
+        </div>
+
+    } @empty {
+        <div>No task were found...</div>
+    }
+
+</div>

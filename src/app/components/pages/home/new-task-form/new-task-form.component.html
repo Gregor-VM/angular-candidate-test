@@ -1,9 +1,34 @@
-<h2>Create a new task</h2>
-<form>
+<h2 class="opacity-50 text-center my-4">Create a new task</h2>
+<form class="flex gap-4 flex-col mx-auto w-75 bg-neutral-100 rounded-md shadow-sm p-8" [formGroup]="taskForm" (submit)="saveTask()">
   <app-input
-    [label]="'New Task'"
-    [id]="'new-task'"
-    [formControl]="form.controls.name"
+    label="Task name"
+    id="name"
+    inputClass="outline-blue-300 w-full border-none rounded-sm px-2 py-1 border-solid border-2 border-gray-500 bg-white"
+    [required]="true"
+    formControlName="name"
   />
-  <app-checkbox />
+  @if(nameError){
+    <small class="text-red-600">The name of the task is required</small>
+  }
+  <app-textarea
+    label="Content of the task"
+    inputClass="outline-blue-300 w-full border-none rounded-sm p-3 border-solid border-2 border-gray-500 overflow-y-hidden resize-none bg-white"
+    [required]="true"
+    id="content"
+    formControlName="content"
+  />
+  @if(contentError){
+    <small class="text-red-600">The content of the task is required</small>
+  } 
+  <app-checkbox
+    label="Completed"
+    labelClass="py-4"
+    inputClass=""
+    id="done1"
+    formControlName="done"
+  />
+
+  <button class="w-full bg-green-300 p-4 rounded-sm outline-none hover:bg-green-400 cursor-pointer" type="submit">Create</button>
 </form>
+
+<small class="w-full block mt-3 text-center text-blue-400 hover:text-blue-300 hover:underline"><a [routerLink]="'/tasks'">View all tasks</a></small>

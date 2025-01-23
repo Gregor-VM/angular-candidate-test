@@ -1,9 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
 * {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-tap-highlight-color: transparent;
 }
-
+/*
 body {
   margin: 0;
 }
@@ -25,4 +26,4 @@ h1 {
 h2 {
   font-weight: 500;
   font-size: 2.25rem;
-}
+}*/

@@ -1,4 +1,8 @@
 @if(label()) {
-<label [htmlFor]="id()">{{ label() }}</label>
+<label [htmlFor]="id()">{{ label() }}
+   @if(required()){
+    <span class="required">*</span>
+   } 
+</label>
 }
-<input type="text" [value]="value()" (input)="onInput($event)" [id]="id()" />
+<input type="text" [class]="inputClass" [value]="value()" (input)="onInput($event)" [id]="id()" />

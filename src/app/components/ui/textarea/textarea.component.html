@@ -1,0 +1,8 @@
+@if(label()) {
+<label [htmlFor]="id()">{{ label() }}
+    @if(required()){
+        <span class="required">*</span>
+    }
+</label>
+}
+<textarea type="text" [class]="inputClass" [value]="value()" (input)="onInput($event)" [id]="id()" (keyup)="autoGrow($event)"></textarea>

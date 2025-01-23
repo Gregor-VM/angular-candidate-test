@@ -2,30 +2,32 @@ import { Component, forwardRef, input, signal, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-checkbox',
+  selector: 'app-textarea',
   standalone: true,
-  imports: [],
-  templateUrl: './checkbox.component.html',
-  styleUrl: './checkbox.component.scss',
+  imports: [
+
+  ],
+  templateUrl: './textarea.component.html',
+  styleUrl: './textarea.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CheckboxComponent),
+      useExisting: forwardRef(() => TextAreaComponent),
       multi: true
     }
   ]
 })
-export class CheckboxComponent implements ControlValueAccessor {
+export class TextAreaComponent implements ControlValueAccessor {
   @Input() inputClass = "";
-  @Input() labelClass = "";
   label = input('');
-  value = signal(false);
+  value = signal('');
   id = input('');
+  required = input(false);
 
-  onChange = (value: boolean) => { };
+  onChange = (value: string) => { };
   onTouched = () => { };
 
-  writeValue(value: boolean): void {
+  writeValue(value: string): void {
     this.value.set(value);
   }
   registerOnChange(fn: any): void {
@@ -37,9 +39,14 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   onInput(event: Event) {
     const el = event.target as HTMLInputElement;
-    const value = el.checked;
+    const value = el.value;
     this.onChange(value);
     this.value.set(value);
   }
 
+  autoGrow(e: KeyboardEvent) {
+    const el = event?.target as HTMLInputElement;
+    el.style.height = "0px";
+    el.style.height = (el.scrollHeight + 25)+"px";
+  }
 }
